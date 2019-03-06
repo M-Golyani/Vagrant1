@@ -1,0 +1,19 @@
+[Unit]
+Description=A simple one-shot service to start drbd system.
+Before=local-fs-pre.target
+Before=local-fs.target
+RequiredBy=local-fs.target
+
+[Service]
+Type=forking
+ExecStart=/opt/drbdrun.sh
+#ExecStop=/usr/sbin/drbdadm down r0
+TimeoutSec=30
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=350
+StartLimitBurst=10
+
+[Install]
+WantedBy=multi-user.target
+
